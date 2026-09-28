@@ -1,0 +1,3 @@
+pip install flask flask-cors python-dotenv pillow pytest pytest-cov python-docx openpyxl python-pptx playwright
+python3 -m playwright install chromium
+# 22 pytest passed — see pytest.txt
