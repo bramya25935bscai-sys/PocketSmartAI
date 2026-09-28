@@ -1,0 +1,92 @@
+[
+  {
+    "file": "01_home.png",
+    "caption": "Landing page with Demo mode badge and three planners.",
+    "mobile": false
+  },
+  {
+    "file": "02_register.png",
+    "caption": "Registration form with sample user.",
+    "mobile": false
+  },
+  {
+    "file": "03_dashboard.png",
+    "caption": "Dashboard after register.",
+    "mobile": false
+  },
+  {
+    "file": "04_login.png",
+    "caption": "Login page.",
+    "mobile": false
+  },
+  {
+    "file": "05_home_planner_form.png",
+    "caption": "Home planner: Rs 80,000, living+kitchen+bedroom.",
+    "mobile": false
+  },
+  {
+    "file": "06_home_results.png",
+    "caption": "Home recommendations within Rs 80,000 (sample data).",
+    "mobile": false
+  },
+  {
+    "file": "07_party_form.png",
+    "caption": "Party planner: birthday, 40 guests, Rs 50,000.",
+    "mobile": false
+  },
+  {
+    "file": "08_party_results.png",
+    "caption": "Party split across catering, d\u00e9cor, entertainment.",
+    "mobile": false
+  },
+  {
+    "file": "09_jewelry_form.png",
+    "caption": "Jewelry planner: wedding guest, Rs 15,000.",
+    "mobile": false
+  },
+  {
+    "file": "10_jewelry_results.png",
+    "caption": "Jewelry picks with outfit image and sample-data tags.",
+    "mobile": false
+  },
+  {
+    "file": "11_history.png",
+    "caption": "Session recommendation history.",
+    "mobile": false
+  },
+  {
+    "file": "12_testimonials.png",
+    "caption": "User stories page.",
+    "mobile": false
+  },
+  {
+    "file": "13_edge_budget_too_low.png",
+    "caption": "Edge case: budget too low shows validation error.",
+    "mobile": false
+  },
+  {
+    "file": "14_edge_invalid_image.png",
+    "caption": "Edge case: non-image upload rejected.",
+    "mobile": false
+  },
+  {
+    "file": "15_edge_fallback.png",
+    "caption": "Demo/fallback message with curated party list.",
+    "mobile": false
+  },
+  {
+    "file": "16_mobile_home.png",
+    "caption": "Mobile landing 390x844.",
+    "mobile": true
+  },
+  {
+    "file": "17_mobile_home_planner.png",
+    "caption": "Mobile home planner.",
+    "mobile": true
+  },
+  {
+    "file": "18_mobile_party_results.png",
+    "caption": "Mobile party results.",
+    "mobile": true
+  }
+]

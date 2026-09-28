@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Home Planner · PocketSmart AI{% endblock %}
+{% block content %}
+<section class="planner">
+  <h1>Home Interior Budget Planner</h1>
+  <p class="hint">All results are sample data from IKEA, Amazon and Flipkart catalogs.</p>
+  <form id="home-form" class="grid-form">
+    <label>Budget (INR) <input name="budget" type="number" min="1" value="80000" required /></label>
+    <fieldset>
+      <legend>Rooms</legend>
+      <label><input type="checkbox" name="rooms" value="living" checked /> Living room</label>
+      <label><input type="checkbox" name="rooms" value="kitchen" checked /> Kitchen</label>
+      <label><input type="checkbox" name="rooms" value="bedroom" checked /> Bedroom</label>
+    </fieldset>
+    <label>Lights <input name="lights" type="number" min="0" value="4" /></label>
+    <label>Ceiling fans <input name="fans" type="number" min="0" value="3" /></label>
+    <label>Dining tables <input name="dining_tables" type="number" min="0" value="1" /></label>
+    <label>Sofas <input name="sofa" type="number" min="0" value="1" /></label>
+    <label>Beds <input name="bed" type="number" min="0" value="1" /></label>
+    <label>Storage <input name="storage" type="number" min="0" value="1" /></label>
+    <button type="submit">Generate home plan</button>
+  </form>
+  <div id="results" class="results"></div>
+</section>
+{% endblock %}

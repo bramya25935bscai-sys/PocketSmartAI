@@ -1,0 +1,18 @@
+......................                                                   [100%]
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.13.14-final-0 _______________
+
+Name                                Stmts   Miss  Cover
+-------------------------------------------------------
+pocketsmart/__init__.py                 0      0   100%
+pocketsmart/app.py                     24      3    88%
+pocketsmart/config.py                  18      0   100%
+pocketsmart/models/schemas.py          31      3    90%
+pocketsmart/routes/__init__.py          3      0   100%
+pocketsmart/routes/api.py             105     10    90%
+pocketsmart/routes/pages.py            34      2    94%
+pocketsmart/services/ai_client.py      47     35    26%
+pocketsmart/services/catalog.py        17      0   100%
+pocketsmart/services/recommend.py     156     23    85%
+-------------------------------------------------------
+TOTAL                                 435     76    83%
