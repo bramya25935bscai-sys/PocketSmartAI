@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}PocketSmart AI{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <header class="top">
+    <a class="logo" href="/">PocketSmart AI</a>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/home-planner">Home Planner</a>
+      <a href="/party-planner">Party Planner</a>
+      <a href="/jewelry-planner">Jewelry Planner</a>
+      <a href="/history">History</a>
+      <a href="/testimonials">Stories</a>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/login">Login</a>
+    </nav>
+    {% if demo_mode %}
+    <span class="badge demo" id="demo-badge">Demo mode</span>
+    {% else %}
+    <span class="badge live">Live Gemini</span>
+    {% endif %}
+  </header>
+  <main>{% block content %}{% endblock %}</main>
+  <footer>
+    <p>PocketSmart AI · sample catalogs (Amazon, Flipkart, IKEA, Swiggy, Zomato, OYO) · INR</p>
+  </footer>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

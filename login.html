@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Login · PocketSmart AI{% endblock %}
+{% block content %}
+<section class="form-card">
+  <h1>Login</h1>
+  <form id="login-form">
+    <label>Email <input name="email" type="email" required value="riya@example.com" /></label>
+    <label>Password <input name="password" type="password" required value="demo1234" /></label>
+    <button type="submit">Sign in</button>
+  </form>
+  <p>New here? <a href="/register">Register</a></p>
+  <p id="auth-msg" class="msg"></p>
+</section>
+{% endblock %}
