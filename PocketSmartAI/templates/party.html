@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Party Planner | PocketSmart AI</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+    <style>
+
+        .product-section {
+            margin-top: 30px;
+            padding: 30px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+        }
+
+        .product-section h2 {
+            margin-bottom: 10px;
+        }
+
+        .product-description {
+            color: #777;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .product-card {
+            padding: 20px;
+            border: 1px solid #e8e5f5;
+            border-radius: 18px;
+            background: #faf9ff;
+        }
+
+        .product-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .product-card h3 {
+            margin-bottom: 8px;
+            font-size: 19px;
+        }
+
+        .product-card p {
+            color: #777;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .store-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .store-btn {
+            display: block;
+            text-align: center;
+            padding: 11px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .amazon-btn {
+            background: #ff9900;
+            color: #111;
+        }
+
+        .flipkart-btn {
+            background: #2874f0;
+            color: white;
+        }
+
+        .ikea-btn {
+            background: #0058a3;
+            color: white;
+        }
+
+        .product-note {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff8e8;
+            border-radius: 12px;
+            color: #735b20;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 850px) {
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .product-section {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body class="dashboard-body">
+
+
+<main class="party-page">
+
+
+    <!-- HEADER -->
+
+    <section class="party-header">
+
+        <p class="eyebrow">
+            🎉 AI PARTY PLANNER
+        </p>
+
+        <h1>
+            Plan your perfect party.
+        </h1>
+
+        <p class="subtitle">
+            Tell us about your party and we'll help you build a smart budget.
+        </p>
+
+    </section>
+
+
+    <!-- PLANNER CARD -->
+
+    <section class="planner-card">
+
+        <h2>
+            Let's plan your party 🎊
+        </h2>
+
+
+        <div class="planner-form">
+
+
+            <!-- GUESTS -->
+
+            <div class="form-group">
+
+                <label for="guests">
+                    Number of Guests
+                </label>
+
+                <input
+                    id="guests"
+                    type="number"
+                    min="1"
+                    placeholder="Example: 50"
+                >
+
+            </div>
+
+
+            <!-- PARTY TYPE -->
+
+            <div class="form-group">
+
+                <label for="partyType">
+                    Party Type
+                </label>
+
+                <select id="partyType">
+
+                    <option value="Birthday Party">
+                        Birthday Party
+                    </option>
+
+                    <option value="Wedding">
+                        Wedding
+                    </option>
+
+                    <option value="Engagement">
+                        Engagement
+                    </option>
+
+                    <option value="Family Function">
+                        Family Function
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- BUDGET -->
+
+            <div class="form-group">
+
+                <label for="budget">
+                    Your Budget (₹)
+                </label>
+
+                <input
+                    id="budget"
+                    type="number"
+                    min="1"
+                    placeholder="Example: 25000"
+                >
+
+            </div>
+
+
+            <!-- NEEDS -->
+
+            <div class="form-group needs-group">
+
+                <label for="needs">
+                    What do you need?
+                </label>
+
+                <textarea
+                    id="needs"
+                    placeholder="Example: Food, decoration, music, photography..."
+                ></textarea>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- BUTTON -->
+
+        <button
+            type="button"
+            class="create-plan-btn"
+            onclick="createPartyPlan()"
+        >
+            ✨ Create Party Plan
+        </button>
+
+
+    </section>
+
+
+    <!-- RESULT -->
+
+    <div id="party-result"></div>
+
+
+</main>
+
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+
+<script>
+
+
+async function createPartyPlan() {
+
+
+    const guests =
+        document.getElementById("guests").value;
+
+
+    const partyType =
+        document.getElementById("partyType").value;
+
+
+    const budget =
+        document.getElementById("budget").value;
+
+
+    const needs =
+        document.getElementById("needs").value.trim();
+
+
+    if (!guests || !budget) {
+
+        alert(
+            "Please enter number of guests and budget."
+        );
+
+        return;
+    }
+
+
+    const totalBudget =
+        Number(budget);
+
+
+    const totalGuests =
+        Number(guests);
+
+
+    if (
+        totalBudget <= 0 ||
+        totalGuests <= 0
+    ) {
+
+        alert(
+            "Please enter valid guest count and budget."
+        );
+
+        return;
+    }
+
+
+    /* BUDGET BREAKDOWN */
+
+
+    const food =
+        Math.round(totalBudget * 0.35);
+
+
+    const decoration =
+        Math.round(totalBudget * 0.20);
+
+
+    const venue =
+        Math.round(totalBudget * 0.15);
+
+
+    const photography =
+        Math.round(totalBudget * 0.10);
+
+
+    const music =
+        Math.round(totalBudget * 0.05);
+
+
+    const other =
+        totalBudget
+        - food
+        - decoration
+        - venue
+        - photography
+        - music;
+
+
+    document.getElementById(
+        "party-result"
+    ).innerHTML = `
+
+
+        <section class="planner-card">
+
+
+            <h2>
+                🎉 Your Party Plan
+            </h2>
+
+
+            <div class="planner-form">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Party Type
+                    </label>
+
+                    <input
+                        value="${escapeHtml(partyType)}"
+                        readonly
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Guests
+                    </label>
+
+                    <input
+                        value="${totalGuests}"
+                        readonly
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Total Budget
+                    </label>
+
+                    <input
+                        value="₹${totalBudget.toLocaleString("en-IN")}"
+                        readonly
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Requirements
+                    </label>
+
+                    <input
+                        value="${escapeHtml(
+                            needs || "General party planning"
+                        )}"
+                        readonly
+                    >
+
+                </div>
+
+
+            </div>
+
+
+            <h2 style="margin-top:30px;">
+                💰 Budget Breakdown
+            </h2>
+
+
+            <div class="budget-item">
+
+                <span>
+                    🍽️ Food
+                </span>
+
+                <strong>
+                    ₹${food.toLocaleString("en-IN")}
+                </strong>
+
+            </div>
+
+
+            <div class="budget-item">
+
+                <span>
+                    🎈 Decoration
+                </span>
+
+                <strong>
+                    ₹${decoration.toLocaleString("en-IN")}
+                </strong>
+
+            </div>
+
+
+            <div class="budget-item">
+
+                <span>
+                    🏛️ Venue
+                </span>
+
+                <strong>
+                    ₹${venue.toLocaleString("en-IN")}
+                </strong>
+
+            </div>
+
+
+            <div class="budget-item">
+
+                <span>
+                    📸 Photography
+                </span>
+
+                <strong>
+                    ₹${photography.toLocaleString("en-IN")}
+                </strong>
+
+            </div>
+
+
+            <div class="budget-item">
+
+                <span>
+                    🎵 Music
+                </span>
+
+                <strong>
+                    ₹${music.toLocaleString("en-IN")}
+                </strong>
+
+            </div>
+
+
+            <div class="budget-item">
+
+                <span>
+                    ✨ Other
+                </span>
+
+                <strong>
+                    ₹${other.toLocaleString("en-IN")}
+                </strong>
+
+            </div>
+
+
+            <!-- AI RESULT -->
+
+            <div
+                id="party-ai-result"
+                style="
+                    margin-top:30px;
+                    padding:25px;
+                    background:#f7f5ff;
+                    border-radius:18px;
+                "
+            >
+
+                <h2>
+                    🤖 AI Party Recommendation
+                </h2>
+
+                <p>
+                    Gemini AI is preparing your smart party recommendation...
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- PRODUCT SUGGESTIONS -->
+
+
+        <section class="product-section">
+
+
+            <h2>
+                🛍️ Party Product Suggestions
+            </h2>
+
+
+            <p class="product-description">
+
+                Find useful party products and decorations
+                from Amazon, Flipkart and IKEA.
+
+            </p>
+
+
+            <div class="product-grid">
+
+
+                <!-- DECORATION -->
+
+                <div class="product-card">
+
+                    <div class="product-icon">
+                        🎈
+                    </div>
+
+                    <h3>
+                        Party Decorations
+                    </h3>
+
+                    <p>
+                        Balloons, banners, backdrops and party decoration items.
+                    </p>
+
+
+                    <div class="store-buttons">
+
+                        <a
+                            class="store-btn amazon-btn"
+                            target="_blank"
+                            href="https://www.amazon.in/s?k=party+decoration"
+                        >
+                            Amazon
+                        </a>
+
+
+                        <a
+                            class="store-btn flipkart-btn"
+                            target="_blank"
+                            href="https://www.flipkart.com/search?q=party%20decoration"
+                        >
+                            Flipkart
+                        </a>
+
+
+                        <a
+                            class="store-btn ikea-btn"
+                            target="_blank"
+                            href="https://www.ikea.com/in/en/search/?q=decoration"
+                        >
+                            IKEA
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TABLEWARE -->
+
+                <div class="product-card">
+
+                    <div class="product-icon">
+                        🍽️
+                    </div>
+
+                    <h3>
+                        Tableware
+                    </h3>
+
+                    <p>
+                        Plates, cups, serving items and party table accessories.
+                    </p>
+
+
+                    <div class="store-buttons">
+
+                        <a
+                            class="store-btn amazon-btn"
+                            target="_blank"
+                            href="https://www.amazon.in/s?k=party+tableware"
+                        >
+                            Amazon
+                        </a>
+
+
+                        <a
+                            class="store-btn flipkart-btn"
+                            target="_blank"
+                            href="https://www.flipkart.com/search?q=party%20tableware"
+                        >
+                            Flipkart
+                        </a>
+
+
+                        <a
+                            class="store-btn ikea-btn"
+                            target="_blank"
+                            href="https://www.ikea.com/in/en/search/?q=tableware"
+                        >
+                            IKEA
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LIGHTING -->
+
+                <div class="product-card">
+
+                    <div class="product-icon">
+                        💡
+                    </div>
+
+                    <h3>
+                        Party Lighting
+                    </h3>
+
+                    <p>
+                        Decorative lights, LED lights and party lighting accessories.
+                    </p>
+
+
+                    <div class="store-buttons">
+
+                        <a
+                            class="store-btn amazon-btn"
+                            target="_blank"
+                            href="https://www.amazon.in/s?k=party+lights"
+                        >
+                            Amazon
+                        </a>
+
+
+                        <a
+                            class="store-btn flipkart-btn"
+                            target="_blank"
+                            href="https://www.flipkart.com/search?q=party%20lights"
+                        >
+                            Flipkart
+                        </a>
+
+
+                        <a
+                            class="store-btn ikea-btn"
+                            target="_blank"
+                            href="https://www.ikea.com/in/en/search/?q=lights"
+                        >
+                            IKEA
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CAKE ACCESSORIES -->
+
+                <div class="product-card">
+
+                    <div class="product-icon">
+                        🎂
+                    </div>
+
+                    <h3>
+                        Cake Accessories
+                    </h3>
+
+                    <p>
+                        Cake toppers, candles and useful birthday accessories.
+                    </p>
+
+
+                    <div class="store-buttons">
+
+                        <a
+                            class="store-btn amazon-btn"
+                            target="_blank"
+                            href="https://www.amazon.in/s?k=cake+decoration+accessories"
+                        >
+                            Amazon
+                        </a>
+
+
+                        <a
+                            class="store-btn flipkart-btn"
+                            target="_blank"
+                            href="https://www.flipkart.com/search?q=cake%20decoration%20accessories"
+                        >
+                            Flipkart
+                        </a>
+
+
+                        <a
+                            class="store-btn ikea-btn"
+                            target="_blank"
+                            href="https://www.ikea.com/in/en/search/?q=kitchen"
+                        >
+                            IKEA
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PARTY PROPS -->
+
+                <div class="product-card">
+
+                    <div class="product-icon">
+                        🎭
+                    </div>
+
+                    <h3>
+                        Party Props
+                    </h3>
+
+                    <p>
+                        Photo booth props, masks and fun party accessories.
+                    </p>
+
+
+                    <div class="store-buttons">
+
+                        <a
+                            class="store-btn amazon-btn"
+                            target="_blank"
+                            href="https://www.amazon.in/s?k=party+props"
+                        >
+                            Amazon
+                        </a>
+
+
+                        <a
+                            class="store-btn flipkart-btn"
+                            target="_blank"
+                            href="https://www.flipkart.com/search?q=party%20props"
+                        >
+                            Flipkart
+                        </a>
+
+
+                        <a
+                            class="store-btn ikea-btn"
+                            target="_blank"
+                            href="https://www.ikea.com/in/en/search/?q=decor"
+                        >
+                            IKEA
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STORAGE -->
+
+                <div class="product-card">
+
+                    <div class="product-icon">
+                        🎁
+                    </div>
+
+                    <h3>
+                        Gifts & Party Items
+                    </h3>
+
+                    <p>
+                        Return gifts, gift bags and small party accessories.
+                    </p>
+
+
+                    <div class="store-buttons">
+
+                        <a
+                            class="store-btn amazon-btn"
+                            target="_blank"
+                            href="https://www.amazon.in/s?k=party+return+gifts"
+                        >
+                            Amazon
+                        </a>
+
+
+                        <a
+                            class="store-btn flipkart-btn"
+                            target="_blank"
+                            href="https://www.flipkart.com/search?q=party%20return%20gifts"
+                        >
+                            Flipkart
+                        </a>
+
+
+                        <a
+                            class="store-btn ikea-btn"
+                            target="_blank"
+                            href="https://www.ikea.com/in/en/search/?q=gifts"
+                        >
+                            IKEA
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="product-note">
+
+                💡 <b>Note:</b>
+                These buttons open retailer search pages for the selected
+                product category. Product prices and availability can change
+                on the retailer website.
+
+            </div>
+
+
+        </section>
+
+
+    `;
+
+
+    /* AI RECOMMENDATION */
+
+
+    const aiDetails = `
+
+Party Type:
+${partyType}
+
+Number of Guests:
+${totalGuests}
+
+User Budget:
+₹${totalBudget.toLocaleString("en-IN")}
+
+Requirements:
+${needs || "General party planning"}
+
+Please create a practical party planning recommendation.
+
+Include:
+
+1. Budget priorities
+2. Food planning
+3. Decoration planning
+4. Venue considerations
+5. Entertainment ideas
+6. Money-saving ideas
+7. Simple step-by-step party plan
+
+Also mention useful product categories
+that could be purchased for this party.
+
+Do not invent current product prices
+or specific product availability.
+
+`;
+
+
+    try {
+
+
+        const response =
+            await fetch(
+                "/ai-recommendation",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        planner:
+                            "Party Planning",
+
+                        budget:
+                            totalBudget.toString(),
+
+                        details:
+                            aiDetails
+
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        const aiResult =
+            document.getElementById(
+                "party-ai-result"
+            );
+
+
+        if (data.success) {
+
+
+            aiResult.innerHTML = `
+
+                <h2>
+                    🤖 AI Party Recommendation
+                </h2>
+
+                <div
+                    style="
+                        line-height:1.7;
+                        white-space:pre-wrap;
+                    "
+                >
+                    ${escapeHtml(
+                        data.recommendation
+                    )}
+                </div>
+
+                <p
+                    style="
+                        margin-top:15px;
+                        color:#666;
+                        font-size:14px;
+                    "
+                >
+                    ${
+                        data.source === "gemini"
+                        ? "✨ Recommendation generated by Gemini AI."
+                        : "💡 Backup recommendation used because Gemini AI is temporarily unavailable."
+                    }
+                </p>
+
+            `;
+
+
+        } else {
+
+
+            aiResult.innerHTML = `
+
+                <h2>
+                    🤖 AI Party Recommendation
+                </h2>
+
+                <p>
+                    ${
+                        escapeHtml(
+                            data.message ||
+                            "Unable to generate recommendation."
+                        )
+                    }
+                </p>
+
+            `;
+
+        }
+
+
+    } catch (error) {
+
+
+        console.error(error);
+
+
+        document.getElementById(
+            "party-ai-result"
+        ).innerHTML = `
+
+            <h2>
+                🤖 AI Party Recommendation
+            </h2>
+
+            <p>
+                AI recommendation could not be loaded.
+                Please try again.
+            </p>
+
+        `;
+
+    }
+
+
+}
+
+
+/*
+    Prevent AI response from injecting HTML
+    into the webpage.
+*/
+
+function escapeHtml(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text;
+
+    return div.innerHTML;
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>

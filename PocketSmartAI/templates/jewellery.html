@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Jewellery Planner | PocketSmart AI</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff8f2;
+    color: #222;
+}
+
+.page {
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.back {
+    display: inline-block;
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: #555;
+    font-weight: bold;
+}
+
+h1 {
+    text-align: center;
+    font-size: 40px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #777;
+    margin-bottom: 35px;
+}
+
+.card {
+    background: white;
+    padding: 35px;
+    border-radius: 22px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+}
+
+.group {
+    display: flex;
+    flex-direction: column;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 9px;
+}
+
+input,
+select,
+textarea {
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.upload-box {
+    border: 2px dashed #d6b35a;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    background: #fffdf7;
+}
+
+.upload-box p {
+    color: #777;
+    margin-top: 5px;
+}
+
+.preview {
+    display: none;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.preview img {
+    max-width: 300px;
+    max-height: 300px;
+    border-radius: 15px;
+    object-fit: cover;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+}
+
+.upload-status {
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+button {
+    width: 100%;
+    margin-top: 25px;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    background: #b8860b;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.result {
+    margin-top: 30px;
+}
+
+.result-card {
+    background: white;
+    padding: 30px;
+    border-radius: 22px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+.budget {
+    margin-top: 20px;
+    background: #fffaf0;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.row:last-child {
+    border-bottom: none;
+}
+
+
+/* =====================================
+   JEWELLERY STORE SECTION
+===================================== */
+
+.store-section {
+    margin-top: 30px;
+    background: white;
+    padding: 30px;
+    border-radius: 22px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+.store-section h2 {
+    margin-top: 0;
+    text-align: center;
+    color: #8a6200;
+}
+
+.store-subtitle {
+    text-align: center;
+    color: #777;
+    margin-bottom: 25px;
+}
+
+.store-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.store-card {
+    border: 1px solid #ead9a8;
+    border-radius: 16px;
+    padding: 22px;
+    background: #fffdf7;
+    text-align: center;
+    transition: 0.2s;
+}
+
+.store-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.10);
+}
+
+.store-logo {
+    font-size: 38px;
+    margin-bottom: 8px;
+}
+
+.store-card h3 {
+    margin: 8px 0;
+    color: #6f4e00;
+}
+
+.store-card p {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 60px;
+}
+
+.store-btn {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 11px 18px;
+    border-radius: 10px;
+    background: #b8860b;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.store-btn:hover {
+    opacity: 0.9;
+}
+
+.store-categories {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #ead9a8;
+    text-align: center;
+}
+
+.category-link {
+    display: inline-block;
+    margin: 6px;
+    padding: 9px 14px;
+    border-radius: 20px;
+    background: #fff4d6;
+    color: #795900;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.category-link:hover {
+    background: #f5e2ae;
+}
+
+
+/* =====================================
+   MOBILE
+===================================== */
+
+@media(max-width:700px) {
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full {
+        grid-column: auto;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    .store-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .store-section {
+        padding: 22px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="page">
+
+<div class="container">
+
+
+<a href="/dashboard" class="back">
+    ← Back to Dashboard
+</a>
+
+
+<h1>
+    Plan Your Jewellery 💎
+</h1>
+
+
+<p class="subtitle">
+    Create a smart jewellery budget plan.
+</p>
+
+
+<!-- =====================================
+     JEWELLERY PLANNER FORM
+===================================== -->
+
+<div class="card">
+
+<div class="grid">
+
+
+<!-- JEWELLERY TYPE -->
+
+<div class="group">
+
+<label>
+    Jewellery Type
+</label>
+
+<select id="jewelleryType">
+
+<option>Wedding Jewellery</option>
+<option>Gold Jewellery</option>
+<option>Silver Jewellery</option>
+<option>Diamond Jewellery</option>
+<option>Daily Wear</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+
+<!-- NUMBER OF ITEMS -->
+
+<div class="group">
+
+<label>
+    Number of Items
+</label>
+
+<input
+    type="number"
+    id="items"
+    placeholder="Example: 5"
+    min="1"
+>
+
+</div>
+
+
+<!-- BUDGET -->
+
+<div class="group">
+
+<label>
+    Total Budget (₹)
+</label>
+
+<input
+    type="number"
+    id="jewelleryBudget"
+    placeholder="Example: 200000"
+    min="1"
+>
+
+</div>
+
+
+<!-- METAL -->
+
+<div class="group">
+
+<label>
+    Preferred Metal
+</label>
+
+<select id="metal">
+
+<option>Gold</option>
+<option>Silver</option>
+<option>Diamond</option>
+<option>Platinum</option>
+<option>Mixed</option>
+
+</select>
+
+</div>
+
+
+<!-- NEEDS -->
+
+<div class="group full">
+
+<label>
+    What do you need?
+</label>
+
+<textarea
+    id="jewelleryNeeds"
+    placeholder="Example: Necklace, earrings, ring, bangles..."
+></textarea>
+
+</div>
+
+
+<!-- IMAGE UPLOAD -->
+
+<div class="group full">
+
+<label>
+    Upload Jewellery Image
+</label>
+
+<div class="upload-box">
+
+<input
+    type="file"
+    id="jewelleryImage"
+    accept="image/png,image/jpeg,image/webp"
+    onchange="previewJewelleryImage()"
+>
+
+<p>
+    Upload JPG, PNG or WEBP image
+</p>
+
+
+<div
+    id="imagePreview"
+    class="preview"
+>
+
+<img
+    id="previewImage"
+    src=""
+    alt="Jewellery Preview"
+>
+
+
+<div
+    id="uploadStatus"
+    class="upload-status">
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<button
+    id="createButton"
+    onclick="createJewelleryPlan()"
+>
+
+💎 Create Jewellery Plan
+
+</button>
+
+</div>
+
+
+<!-- RESULT -->
+
+<div
+    id="jewelleryResult"
+    class="result">
+</div>
+
+
+<!-- =====================================
+     JEWELLERY STORE SUGGESTIONS
+===================================== -->
+
+<section class="store-section">
+
+<h2>
+    🛍️ Jewellery Stores & Shopping
+</h2>
+
+<p class="store-subtitle">
+    Explore jewellery collections from popular jewellery stores.
+</p>
+
+
+<div class="store-grid">
+
+
+<!-- GRT -->
+
+<div class="store-card">
+
+<div class="store-logo">
+    💛
+</div>
+
+<h3>
+    GRT Jewellers
+</h3>
+
+<p>
+    Explore gold, diamond, silver and platinum jewellery
+    from GRT Jewellers.
+</p>
+
+<a
+    class="store-btn"
+    href="https://www.grtjewels.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+>
+
+🛒 Visit GRT
+
+</a>
+
+</div>
+
+
+<!-- THANGAMAYIL -->
+
+<div class="store-card">
+
+<div class="store-logo">
+    ✨
+</div>
+
+<h3>
+    Thangamayil Jewellery
+</h3>
+
+<p>
+    Explore gold, silver, diamond and other jewellery
+    collections from Thangamayil.
+</p>
+
+<a
+    class="store-btn"
+    href="https://www.thangamayil.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+>
+
+🛒 Visit Thangamayil
+
+</a>
+
+</div>
+
+
+<!-- TANISHQ -->
+
+<div class="store-card">
+
+<div class="store-logo">
+    💎
+</div>
+
+<h3>
+    Tanishq
+</h3>
+
+<p>
+    Explore gold, diamond, wedding and daily-wear
+    jewellery collections.
+</p>
+
+<a
+    class="store-btn"
+    href="https://www.tanishq.co.in/"
+    target="_blank"
+    rel="noopener noreferrer"
+>
+
+🛒 Visit Tanishq
+
+</a>
+
+</div>
+
+
+</div>
+
+
+<!-- QUICK CATEGORIES -->
+
+<div class="store-categories">
+
+<strong>
+    🔎 Quick Jewellery Categories
+</strong>
+
+<br>
+
+
+<a
+    class="category-link"
+    href="https://www.grtjewels.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+>
+    💍 Gold Jewellery
+</a>
+
+
+<a
+    class="category-link"
+    href="https://www.tanishq.co.in/"
+    target="_blank"
+    rel="noopener noreferrer"
+>
+    💎 Diamond Jewellery
+</a>
+
+
+<a
+    class="category-link"
+    href="https://www.thangamayil.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+>
+    👰 Wedding Jewellery
+</a>
+
+
+<a
+    class="category-link"
+    href="https://www.tanishq.co.in/"
+    target="_blank"
+    rel="noopener noreferrer"
+>
+    ✨ Daily Wear
+</a>
+
+
+<a
+    class="category-link"
+    href="https://www.grtjewels.com/"
+    target="_blank"
+    rel="noopener noreferrer"
+>
+    📿 Earrings & Chains
+</a>
+
+</div>
+
+</section>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+
+/* =====================================
+   IMAGE PREVIEW
+===================================== */
+
+async function previewJewelleryImage() {
+
+    const input =
+        document.getElementById("jewelleryImage");
+
+    const preview =
+        document.getElementById("imagePreview");
+
+    const image =
+        document.getElementById("previewImage");
+
+    const status =
+        document.getElementById("uploadStatus");
+
+
+    if (!input.files || !input.files[0]) {
+
+        preview.style.display = "none";
+
+        return;
+    }
+
+
+    const file = input.files[0];
+
+
+    const allowedTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+    ];
+
+
+    if (!allowedTypes.includes(file.type)) {
+
+        alert(
+            "Only JPG, PNG and WEBP images are allowed."
+        );
+
+        input.value = "";
+
+        preview.style.display = "none";
+
+        return;
+    }
+
+
+    image.src =
+        URL.createObjectURL(file);
+
+    preview.style.display =
+        "block";
+
+    status.innerText =
+        "✅ Image selected successfully.";
+}
+
+
+/* =====================================
+   CREATE JEWELLERY PLAN
+===================================== */
+
+async function createJewelleryPlan() {
+
+    const type =
+        document.getElementById("jewelleryType").value;
+
+
+    const items =
+        document.getElementById("items").value;
+
+
+    const budget =
+        Number(
+            document.getElementById("jewelleryBudget").value
+        );
+
+
+    const metal =
+        document.getElementById("metal").value;
+
+
+    const needs =
+        document.getElementById("jewelleryNeeds")
+        .value.trim();
+
+
+    const imageInput =
+        document.getElementById("jewelleryImage");
+
+
+    const button =
+        document.getElementById("createButton");
+
+
+    if (!items || !budget) {
+
+        alert(
+            "Please enter number of items and budget."
+        );
+
+        return;
+    }
+
+
+    button.disabled = true;
+
+    button.innerText =
+        "🤖 Creating AI Jewellery Plan...";
+
+
+    /* =====================================
+       IMAGE UPLOAD
+    ===================================== */
+
+    if (
+        imageInput.files &&
+        imageInput.files.length > 0
+    ) {
+
+        const formData =
+            new FormData();
+
+
+        formData.append(
+            "image",
+            imageInput.files[0]
+        );
+
+
+        try {
+
+            const uploadResponse =
+                await fetch(
+                    "/upload-jewellery",
+                    {
+                        method: "POST",
+                        body: formData
+                    }
+                );
+
+
+            const uploadData =
+                await uploadResponse.json();
+
+
+            if (!uploadData.success) {
+
+                alert(
+                    uploadData.message
+                );
+
+                button.disabled = false;
+
+                button.innerText =
+                    "💎 Create Jewellery Plan";
+
+                return;
+            }
+
+
+            document.getElementById(
+                "uploadStatus"
+            ).innerText =
+                "✅ Jewellery image uploaded successfully.";
+
+        }
+
+        catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Image upload failed. Please try again."
+            );
+
+            button.disabled = false;
+
+            button.innerText =
+                "💎 Create Jewellery Plan";
+
+            return;
+        }
+    }
+
+
+    /* =====================================
+       LOCAL BUDGET CALCULATION
+    ===================================== */
+
+    const necklace =
+        Math.round(budget * 0.35);
+
+
+    const earrings =
+        Math.round(budget * 0.20);
+
+
+    const ring =
+        Math.round(budget * 0.15);
+
+
+    const bangles =
+        Math.round(budget * 0.20);
+
+
+    const other =
+        budget -
+        necklace -
+        earrings -
+        ring -
+        bangles;
+
+
+    /* =====================================
+       SHOW BASIC PLAN
+    ===================================== */
+
+    document.getElementById(
+        "jewelleryResult"
+    ).innerHTML = `
+
+        <div class="result-card">
+
+            <h2>
+                💎 Your Jewellery Plan
+            </h2>
+
+
+            <p>
+                <b>Jewellery Type:</b>
+                ${escapeHtml(type)}
+            </p>
+
+
+            <p>
+                <b>Number of Items:</b>
+                ${escapeHtml(items)}
+            </p>
+
+
+            <p>
+                <b>Preferred Metal:</b>
+                ${escapeHtml(metal)}
+            </p>
+
+
+            <p>
+                <b>Total Budget:</b>
+                ₹${budget.toLocaleString("en-IN")}
+            </p>
+
+
+            <p>
+                <b>Needs:</b>
+                ${escapeHtml(needs || "Not specified")}
+            </p>
+
+
+            <div class="budget">
+
+                <h2>
+                    💰 Budget Breakdown
+                </h2>
+
+
+                <div class="row">
+
+                    <span>
+                        📿 Necklace
+                    </span>
+
+                    <b>
+                        ₹${necklace.toLocaleString("en-IN")}
+                    </b>
+
+                </div>
+
+
+                <div class="row">
+
+                    <span>
+                        💎 Earrings
+                    </span>
+
+                    <b>
+                        ₹${earrings.toLocaleString("en-IN")}
+                    </b>
+
+                </div>
+
+
+                <div class="row">
+
+                    <span>
+                        💍 Ring
+                    </span>
+
+                    <b>
+                        ₹${ring.toLocaleString("en-IN")}
+                    </b>
+
+                </div>
+
+
+                <div class="row">
+
+                    <span>
+                        ⭕ Bangles
+                    </span>
+
+                    <b>
+                        ₹${bangles.toLocaleString("en-IN")}
+                    </b>
+
+                </div>
+
+
+                <div class="row">
+
+                    <span>
+                        ✨ Other
+                    </span>
+
+                    <b>
+                        ₹${other.toLocaleString("en-IN")}
+                    </b>
+
+                </div>
+
+            </div>
+
+
+            <!-- AI RESULT -->
+
+            <div
+                id="aiJewelleryResult"
+                style="
+                    margin-top:25px;
+                    background:#fff8e8;
+                    padding:22px;
+                    border-radius:15px;
+                "
+            >
+
+                <h2>
+                    🤖 AI Jewellery Recommendation
+                </h2>
+
+                <p>
+                    Gemini AI is preparing your smart jewellery recommendation...
+                </p>
+
+            </div>
+
+
+            <p style="
+                text-align:center;
+                font-weight:bold;
+                margin-top:25px;
+            ">
+
+                🎉 Your jewellery plan is ready!
+
+            </p>
+
+
+        </div>
+
+    `;
+
+
+    document.getElementById(
+        "jewelleryResult"
+    ).scrollIntoView({
+        behavior: "smooth"
+    });
+
+
+    /* =====================================
+       GEMINI AI RECOMMENDATION
+    ===================================== */
+
+    const aiDetails = `
+
+Jewellery Type: ${type}
+
+Number of Items: ${items}
+
+Preferred Metal: ${metal}
+
+Total Budget: ₹${budget.toLocaleString("en-IN")}
+
+Customer Requirements:
+${needs || "Not specified"}
+
+Please create a jewellery-specific recommendation.
+
+Focus on:
+
+1. Smart budget allocation
+2. Which jewellery items should be prioritized
+3. How to avoid unnecessary spending
+4. Important buying considerations
+5. Suggested purchase order
+6. Money-saving tips
+
+Use Indian Rupees (₹).
+
+`;
+
+
+    try {
+
+        const aiResponse =
+            await fetch(
+                "/ai-recommendation",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        planner:
+                            "Jewellery Planning",
+
+                        budget:
+                            budget.toString(),
+
+                        details:
+                            aiDetails
+
+                    })
+                }
+            );
+
+
+        const aiData =
+            await aiResponse.json();
+
+
+        const aiBox =
+            document.getElementById(
+                "aiJewelleryResult"
+            );
+
+
+        if (aiData.success) {
+
+            aiBox.innerHTML = `
+
+                <h2>
+                    🤖 AI Jewellery Recommendation
+                </h2>
+
+
+                <div style="
+                    white-space:pre-wrap;
+                    line-height:1.8;
+                    color:#333;
+                ">
+
+                    ${escapeHtml(
+                        aiData.recommendation
+                    )}
+
+                </div>
+
+
+                <p style="
+                    margin-top:15px;
+                    font-size:13px;
+                    color:#777;
+                ">
+
+                    ${
+                        aiData.source === "gemini"
+                        ? "✨ Generated by Gemini AI"
+                        : "ℹ️ PocketSmart backup recommendation"
+                    }
+
+                </p>
+
+            `;
+
+        }
+
+        else {
+
+            aiBox.innerHTML = `
+
+                <h2>
+                    🤖 AI Jewellery Recommendation
+                </h2>
+
+                <p>
+                    AI recommendation could not be generated.
+                </p>
+
+            `;
+
+        }
+
+    }
+
+
+    catch (error) {
+
+        console.error(error);
+
+
+        document.getElementById(
+            "aiJewelleryResult"
+        ).innerHTML = `
+
+            <h2>
+                🤖 AI Jewellery Recommendation
+            </h2>
+
+            <p>
+                AI service is temporarily unavailable.
+            </p>
+
+        `;
+
+    }
+
+
+    button.disabled = false;
+
+    button.innerText =
+        "💎 Create Jewellery Plan";
+
+}
+
+
+/* =====================================
+   ESCAPE HTML
+===================================== */
+
+function escapeHtml(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text;
+
+    return div.innerHTML;
+}
+
+</script>
+
+
+</body>
+
+</html>

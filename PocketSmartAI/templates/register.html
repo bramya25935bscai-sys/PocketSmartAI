@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | PocketSmart AI</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="auth-body">
+
+    <div class="auth-container">
+
+        <a href="/" class="auth-logo">
+            Pocket<span>Smart</span> AI
+        </a>
+
+        <div class="auth-card">
+
+            <div class="auth-icon">
+                ✨
+            </div>
+
+            <h1>Create Your Account</h1>
+
+            <p class="auth-subtitle">
+                Start making smarter financial decisions with AI.
+            </p>
+
+            {% if error %}
+                <p style="color: red; margin-bottom: 15px;">
+                    {{ error }}
+                </p>
+            {% endif %}
+
+            <form method="POST" action="/register">
+
+                <label>Name</label>
+
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Enter your name"
+                    required
+                >
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    required
+                >
+
+                <label>Password</label>
+
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Create a strong password"
+                    minlength="6"
+                    required
+                >
+
+                <label>Confirm Password</label>
+
+                <input
+                    type="password"
+                    name="confirm_password"
+                    placeholder="Confirm your password"
+                    minlength="6"
+                    required
+                >
+
+                <button type="submit" class="auth-button">
+                    Create Account ✨
+                </button>
+
+            </form>
+
+            <p class="switch-auth">
+                Already have an account?
+                <a href="/login">Sign In</a>
+            </p>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

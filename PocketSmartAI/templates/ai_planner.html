@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Smart Planner | PocketSmart AI</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 850px;
+            margin: 40px auto;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .top {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .top h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .top p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        select,
+        textarea,
+        input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        select:focus,
+        textarea:focus,
+        input:focus {
+            border-color: #5b5bea;
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            cursor: pointer;
+            background: #222;
+            color: white;
+            font-weight: bold;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        #loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f0f0ff;
+            color: #555;
+        }
+
+        #result {
+            display: none;
+        }
+
+        .result-title {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .recommendation {
+            white-space: pre-wrap;
+            line-height: 1.8;
+            color: #333;
+            background: #f8f8ff;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .source {
+            margin-top: 15px;
+            font-size: 13px;
+            color: #777;
+        }
+
+        .new-plan-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            background: #5b5bea;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media(max-width:600px) {
+
+            .container {
+                width: 94%;
+                margin: 25px auto;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .top h1 {
+                font-size: 29px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <a href="/dashboard" class="back">
+        ← Back to Dashboard
+    </a>
+
+
+    <div class="top">
+
+        <h1>
+            🤖 AI Smart Planner
+        </h1>
+
+        <p>
+            Tell PocketSmart AI what you want to plan.
+        </p>
+
+    </div>
+
+
+    <!-- PLANNER FORM -->
+
+    <div class="card">
+
+        <label for="planner">
+            What do you want to plan?
+        </label>
+
+        <select id="planner">
+
+            <option value="Party Planning">
+                🎉 Party Planning
+            </option>
+
+            <option value="Home Planning">
+                🏠 Home Planning
+            </option>
+
+            <option value="Jewellery Planning">
+                💎 Jewellery Planning
+            </option>
+
+            <option value="General Budget Planning">
+                💰 General Budget Planning
+            </option>
+
+        </select>
+
+
+        <label for="budget">
+            Your Budget
+        </label>
+
+        <input
+            type="number"
+            id="budget"
+            placeholder="Example: 100000"
+            min="0"
+        >
+
+
+        <label for="details">
+            Tell me what you need
+        </label>
+
+        <textarea
+            id="details"
+            placeholder="Example: I want to plan a birthday party for 100 people. I need food, decoration, photography and music."
+        ></textarea>
+
+
+        <button
+            id="recommendationButton"
+            onclick="getRecommendation()">
+            ✨ Get AI Recommendation
+        </button>
+
+
+        <div id="loading">
+            🤖 Gemini AI is thinking... Please wait.
+        </div>
+
+    </div>
+
+
+    <!-- RESULT -->
+
+    <div class="card" id="result">
+
+        <h2 class="result-title">
+            💡 Your AI Recommendation
+        </h2>
+
+        <div
+            id="recommendation"
+            class="recommendation">
+        </div>
+
+        <div
+            id="source"
+            class="source">
+        </div>
+
+        <a
+            href="/ai-planner"
+            class="new-plan-button">
+            🔄 Create New Plan
+        </a>
+
+    </div>
+
+</div>
+
+
+<script>
+
+async function getRecommendation() {
+
+    const planner =
+        document.getElementById("planner").value;
+
+    const budget =
+        document.getElementById("budget").value;
+
+    const details =
+        document.getElementById("details").value.trim();
+
+
+    if (!details) {
+
+        alert("Please tell me what you want to plan.");
+
+        return;
+    }
+
+
+    const button =
+        document.getElementById("recommendationButton");
+
+    const loading =
+        document.getElementById("loading");
+
+    const result =
+        document.getElementById("result");
+
+    const recommendation =
+        document.getElementById("recommendation");
+
+    const source =
+        document.getElementById("source");
+
+
+    button.disabled = true;
+
+    button.innerText =
+        "🤖 Generating Recommendation...";
+
+    loading.style.display = "block";
+
+    result.style.display = "none";
+
+
+    try {
+
+        const response = await fetch(
+            "/ai-recommendation",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    planner: planner,
+
+                    budget: budget,
+
+                    details: details
+
+                })
+
+            }
+        );
+
+
+        const data = await response.json();
+
+
+        if (data.success) {
+
+            recommendation.textContent =
+                data.recommendation;
+
+
+            if (data.source === "gemini") {
+
+                source.textContent =
+                    "✨ Recommendation generated by Gemini AI.";
+
+            } else {
+
+                source.textContent =
+                    "ℹ️ Gemini AI was temporarily unavailable. A PocketSmart backup plan was generated.";
+
+            }
+
+
+            result.style.display = "block";
+
+            result.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        } else {
+
+            alert(
+                "AI Error: " + data.message
+            );
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Something went wrong. Please check the Flask server."
+        );
+
+    }
+
+    finally {
+
+        loading.style.display = "none";
+
+        button.disabled = false;
+
+        button.innerText =
+            "✨ Get AI Recommendation";
+
+    }
+
+}
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>PocketSmart AI | Dashboard</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f5ff;
+            color: #222;
+        }
+
+        .dashboard {
+            min-height: 100vh;
+            padding: 45px 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .logout-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #ff4d4d;
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .logout-button:hover {
+            background: #d93636;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .header p {
+            color: #777;
+            font-size: 17px;
+        }
+
+        .planner-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 32px;
+            border-radius: 22px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .card h2 {
+            margin: 0 0 12px;
+        }
+
+        .card p {
+            color: #777;
+            line-height: 1.6;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 13px 22px;
+            border-radius: 10px;
+            background: #5b5bea;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .button:hover {
+            background: #4646d4;
+        }
+
+        .history-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        @media(max-width:700px) {
+
+            .planner-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 30px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="dashboard">
+
+    <div class="container">
+
+        <!-- LOGOUT -->
+
+        <div class="top-bar">
+
+            <a href="/logout" class="logout-button">
+                Logout
+            </a>
+
+        </div>
+
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <h1>
+                <h1>
+    Welcome, {{ user_name }}! 🤖
+</h1>
+            </h1>
+
+            <p>
+                Choose a planner and create your smart plan.
+            </p>
+
+        </div>
+
+
+        <!-- PLANNER CARDS -->
+
+        <div class="planner-grid">
+
+
+            <!-- PARTY -->
+
+            <div class="card">
+
+                <div class="icon">
+                    🎉
+                </div>
+
+                <h2>
+                    Party Planner
+                </h2>
+
+                <p>
+                    Plan your party with guests,
+                    food, decoration, music and budget.
+                </p>
+
+                <a href="/party" class="button">
+                    Open Party Planner
+                </a>
+
+            </div>
+
+
+            <!-- HOME -->
+
+            <div class="card">
+
+                <div class="icon">
+                    🏠
+                </div>
+
+                <h2>
+                    Home Planner
+                </h2>
+
+                <p>
+                    Plan your dream home with
+                    interior, furniture, kitchen and budget.
+                </p>
+
+                <a href="/home" class="button">
+                    Open Home Planner
+                </a>
+
+            </div>
+
+
+            <!-- JEWELLERY -->
+
+            <div class="card">
+
+                <div class="icon">
+                    💎
+                </div>
+
+                <h2>
+                    Jewellery Planner
+                </h2>
+
+                <p>
+                    Plan jewellery items and divide
+                    your jewellery budget smartly.
+                </p>
+
+                <a href="/jewellery" class="button">
+                    Open Jewellery Planner
+                </a>
+
+            </div>
+
+
+            <!-- AI SMART PLANNER -->
+
+            <a href="/ai-planner" class="history-link">
+
+                <div class="card">
+
+                    <div class="icon">
+                        🤖
+                    </div>
+
+                    <h2>
+                        AI Smart Planner
+                    </h2>
+
+                    <p>
+                        Get smart recommendations from Gemini AI.
+                    </p>
+
+                    <button style="
+                        margin-top: 15px;
+                        padding: 10px 20px;
+                        border: none;
+                        border-radius: 10px;
+                        cursor: pointer;
+                        font-size: 15px;
+                    ">
+                        Open AI Planner
+                    </button>
+
+                </div>
+
+            </a>
+
+
+            <!-- PLANNING HISTORY -->
+
+            <a href="/history" class="history-link">
+
+                <div class="card">
+
+                    <div class="icon">
+                        📚
+                    </div>
+
+                    <h2>
+                        Planning History
+                    </h2>
+
+                    <p>
+                        View your previous AI recommendations.
+                    </p>
+
+                    <span class="button">
+                        Open Planning History
+                    </span>
+
+                </div>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

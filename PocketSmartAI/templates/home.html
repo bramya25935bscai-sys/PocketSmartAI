@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Home Planner | PocketSmart AI</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f4ff;
+            color: #222;
+        }
+
+        .home-page {
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .top-title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .brand {
+            color: #7b61ff;
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .top-title h1 {
+            font-size: 42px;
+            margin-bottom: 12px;
+        }
+
+        .top-title p {
+            color: #777;
+            font-size: 17px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #635bff;
+            font-weight: bold;
+        }
+
+        .planner-card,
+        .result-card {
+            background: white;
+            padding: 35px;
+            border-radius: 24px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+        }
+
+        .planner-card h2,
+        .result-card h2 {
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 9px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #7b61ff;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .create-btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 16px;
+            border: none;
+            border-radius: 14px;
+            background: #635bff;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .create-btn:hover {
+            background: #5148e8;
+        }
+
+        .create-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        #home-result {
+            margin-top: 30px;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .detail-box {
+            padding: 18px;
+            background: #f7f5ff;
+            border-radius: 14px;
+        }
+
+        .detail-box span {
+            display: block;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .detail-box strong {
+            font-size: 18px;
+        }
+
+        .budget-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .budget-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 17px;
+        }
+
+        .ready {
+            margin-top: 25px;
+            padding: 18px;
+            background: #eefbf3;
+            border-radius: 14px;
+            color: #237a43;
+            font-weight: bold;
+        }
+
+        .ai-result {
+            margin-top: 30px;
+            padding: 25px;
+            background: #f7f5ff;
+            border-radius: 18px;
+        }
+
+        .ai-result h2 {
+            margin-bottom: 15px;
+        }
+
+        .ai-content {
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .ai-source {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .loading {
+            color: #635bff;
+            font-weight: bold;
+        }
+
+
+        /* PRODUCT SECTION */
+
+        .product-section {
+            margin-top: 30px;
+            padding: 28px;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+        }
+
+        .product-section h2 {
+            margin-bottom: 8px;
+        }
+
+        .product-description {
+            color: #777;
+            margin-bottom: 22px;
+            line-height: 1.6;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .product-card {
+            border: 1px solid #e8e5f5;
+            border-radius: 16px;
+            padding: 20px;
+            background: #faf9ff;
+        }
+
+        .product-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .product-card h3 {
+            margin-bottom: 8px;
+            font-size: 19px;
+        }
+
+        .product-card p {
+            color: #777;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .store-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .store-btn {
+            display: block;
+            text-align: center;
+            padding: 11px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .amazon-btn {
+            background: #ff9900;
+            color: #111;
+        }
+
+        .flipkart-btn {
+            background: #2874f0;
+            color: white;
+        }
+
+        .ikea-btn {
+            background: #0058a3;
+            color: white;
+        }
+
+        .product-note {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff8e8;
+            border-radius: 12px;
+            color: #735b20;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+
+        @media (max-width: 800px) {
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .top-title h1 {
+                font-size: 32px;
+            }
+
+            .planner-card,
+            .result-card,
+            .product-section {
+                padding: 22px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="home-page">
+
+    <div class="container">
+
+        <a
+            href="/dashboard"
+            class="back-btn"
+        >
+            ← Back to Dashboard
+        </a>
+
+
+        <div class="top-title">
+
+            <div class="brand">
+                🏠 HOME PLANNER
+            </div>
+
+            <h1>
+                Plan your perfect home.
+            </h1>
+
+            <p>
+                Tell us about your home and we'll help you create a smart budget.
+            </p>
+
+        </div>
+
+
+        <!-- HOME FORM -->
+
+        <div class="planner-card">
+
+            <h2>
+                Let's plan your home 🏡
+            </h2>
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label>
+                        Home Size (sq.ft)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="homeSize"
+                        placeholder="Example: 1200"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Home Type
+                    </label>
+
+                    <select id="homeType">
+
+                        <option value="Apartment">
+                            Apartment
+                        </option>
+
+                        <option value="Independent House">
+                            Independent House
+                        </option>
+
+                        <option value="Villa">
+                            Villa
+                        </option>
+
+                        <option value="Duplex">
+                            Duplex
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Number of Rooms
+                    </label>
+
+                    <input
+                        type="number"
+                        id="rooms"
+                        placeholder="Example: 3"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Your Budget (₹)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="homeBudget"
+                        placeholder="Example: 1000000"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Home Style
+                    </label>
+
+                    <select id="homeStyle">
+
+                        <option value="Modern">
+                            Modern
+                        </option>
+
+                        <option value="Traditional">
+                            Traditional
+                        </option>
+
+                        <option value="Minimal">
+                            Minimal
+                        </option>
+
+                        <option value="Luxury">
+                            Luxury
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Location
+                    </label>
+
+                    <input
+                        type="text"
+                        id="homeLocation"
+                        placeholder="Example: Chennai"
+                    >
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        What do you need?
+                    </label>
+
+                    <textarea
+                        id="homeNeeds"
+                        placeholder="Example: Interior, furniture, kitchen, bedroom, lighting..."
+                    ></textarea>
+
+                </div>
+
+
+            </div>
+
+
+            <button
+                class="create-btn"
+                id="createButton"
+                onclick="createHomePlan()"
+            >
+                ✨ Create Home Plan
+            </button>
+
+        </div>
+
+
+        <!-- RESULT -->
+
+        <div id="home-result"></div>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+async function createHomePlan() {
+
+
+    const size =
+        document.getElementById("homeSize").value;
+
+
+    const type =
+        document.getElementById("homeType").value;
+
+
+    const rooms =
+        document.getElementById("rooms").value;
+
+
+    const budget =
+        document.getElementById("homeBudget").value;
+
+
+    const style =
+        document.getElementById("homeStyle").value;
+
+
+    const location =
+        document.getElementById("homeLocation").value.trim();
+
+
+    const needs =
+        document.getElementById("homeNeeds").value.trim();
+
+
+    const button =
+        document.getElementById("createButton");
+
+
+    if (!size || !rooms || !budget) {
+
+        alert(
+            "Please fill Home Size, Rooms and Budget."
+        );
+
+        return;
+    }
+
+
+    const totalBudget =
+        Number(budget);
+
+
+    if (totalBudget <= 0) {
+
+        alert(
+            "Please enter a valid budget."
+        );
+
+        return;
+    }
+
+
+    button.disabled = true;
+
+    button.innerText =
+        "🤖 Creating AI Home Plan...";
+
+
+    /* BUDGET BREAKDOWN */
+
+    const interior =
+        Math.round(totalBudget * 0.35);
+
+
+    const furniture =
+        Math.round(totalBudget * 0.25);
+
+
+    const kitchen =
+        Math.round(totalBudget * 0.15);
+
+
+    const lighting =
+        Math.round(totalBudget * 0.10);
+
+
+    const other =
+        totalBudget
+        - interior
+        - furniture
+        - kitchen
+        - lighting;
+
+
+    document.getElementById(
+        "home-result"
+    ).innerHTML = `
+
+
+        <div class="result-card">
+
+
+            <h2>
+                🏡 Your Home Plan
+            </h2>
+
+
+            <div class="details">
+
+
+                <div class="detail-box">
+
+                    <span>
+                        Home Size
+                    </span>
+
+                    <strong>
+                        ${escapeHtml(size)} sq.ft
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <span>
+                        Home Type
+                    </span>
+
+                    <strong>
+                        ${escapeHtml(type)}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <span>
+                        Rooms
+                    </span>
+
+                    <strong>
+                        ${escapeHtml(rooms)}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <span>
+                        Home Style
+                    </span>
+
+                    <strong>
+                        ${escapeHtml(style)}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <span>
+                        Location
+                    </span>
+
+                    <strong>
+                        ${escapeHtml(
+                            location || "Not specified"
+                        )}
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <span>
+                        Total Budget
+                    </span>
+
+                    <strong>
+                        ₹${totalBudget.toLocaleString("en-IN")}
+                    </strong>
+
+                </div>
+
+
+            </div>
+
+
+            <h3 class="budget-title">
+                💰 Budget Breakdown
+            </h3>
+
+
+            <div class="budget-item">
+
+                <span>
+                    🛋️ Interior
+                </span>
+
+                <strong>
+                    ₹${interior.toLocaleString("en-IN")}
+                </strong>
+
+            </div>
+
+
+            <div class="budget-item">
+
+                <span>
+                    🪑 Furniture
+                </span>
+
+                <strong>
+                    ₹${furniture.toLocaleString("en-IN")}
+                </strong>
+
+            </div>
+
+
+            <div class="budget-item">
+
+                <span>
+                    🍳 Kitchen
+                </span>
+
+                <strong>
+                    ₹${kitchen.toLocaleString("en-IN")}
+                </strong>
+
+            </div>
+
+
+            <div class="budget-item">
+
+                <span>
+                    💡 Lighting
+                </span>
+
+                <strong>
+                    ₹${lighting.toLocaleString("en-IN")}
+                </strong>
+
+            </div>
+
+
+            <div class="budget-item">
+
+                <span>
+                    ✨ Other
+                </span>
+
+                <strong>
+                    ₹${other.toLocaleString("en-IN")}
+                </strong>
+
+            </div>
+
+
+            <div class="ready">
+
+                🎉 Your home plan is ready!
+
+                <br><br>
+
+                <span>
+                    Needs:
+                    ${escapeHtml(
+                        needs || "General home planning"
+                    )}
+                </span>
+
+            </div>
+
+
+            <!-- AI RESULT -->
+
+            <div class="ai-result">
+
+                <h2>
+                    🤖 AI Home Recommendation
+                </h2>
+
+
+                <div
+                    id="aiHomeResult"
+                    class="ai-content loading"
+                >
+                    Gemini AI is preparing your smart home recommendation...
+                </div>
+
+
+                <div
+                    id="aiHomeSource"
+                    class="ai-source"
+                ></div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- PRODUCT SUGGESTIONS -->
+
+        <div class="product-section">
+
+            <h2>
+                🛍️ Home Product Suggestions
+            </h2>
+
+            <p class="product-description">
+
+                Based on your home planning needs, search for
+                furniture, lighting, kitchen and storage products
+                from popular stores.
+
+            </p>
+
+
+            <div class="product-grid">
+
+
+                <!-- BEDROOM -->
+
+                <div class="product-card">
+
+                    <div class="product-icon">
+                        🛏️
+                    </div>
+
+                    <h3>
+                        Bedroom Furniture
+                    </h3>
+
+                    <p>
+                        Beds, wardrobes, bedside tables and bedroom furniture.
+                    </p>
+
+
+                    <div class="store-buttons">
+
+                        <a
+                            class="store-btn amazon-btn"
+                            target="_blank"
+                            href="https://www.amazon.in/s?k=bedroom+furniture"
+                        >
+                            Amazon
+                        </a>
+
+
+                        <a
+                            class="store-btn flipkart-btn"
+                            target="_blank"
+                            href="https://www.flipkart.com/search?q=bedroom%20furniture"
+                        >
+                            Flipkart
+                        </a>
+
+
+                        <a
+                            class="store-btn ikea-btn"
+                            target="_blank"
+                            href="https://www.ikea.com/in/en/search/?q=bedroom"
+                        >
+                            IKEA
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SOFA -->
+
+                <div class="product-card">
+
+                    <div class="product-icon">
+                        🛋️
+                    </div>
+
+                    <h3>
+                        Sofa & Living Room
+                    </h3>
+
+                    <p>
+                        Sofas, coffee tables, TV units and living room furniture.
+                    </p>
+
+
+                    <div class="store-buttons">
+
+                        <a
+                            class="store-btn amazon-btn"
+                            target="_blank"
+                            href="https://www.amazon.in/s?k=sofa+living+room+furniture"
+                        >
+                            Amazon
+                        </a>
+
+
+                        <a
+                            class="store-btn flipkart-btn"
+                            target="_blank"
+                            href="https://www.flipkart.com/search?q=sofa%20living%20room%20furniture"
+                        >
+                            Flipkart
+                        </a>
+
+
+                        <a
+                            class="store-btn ikea-btn"
+                            target="_blank"
+                            href="https://www.ikea.com/in/en/search/?q=sofa"
+                        >
+                            IKEA
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LIGHTING -->
+
+                <div class="product-card">
+
+                    <div class="product-icon">
+                        💡
+                    </div>
+
+                    <h3>
+                        Home Lighting
+                    </h3>
+
+                    <p>
+                        Ceiling lights, lamps, LED lights and decorative lighting.
+                    </p>
+
+
+                    <div class="store-buttons">
+
+                        <a
+                            class="store-btn amazon-btn"
+                            target="_blank"
+                            href="https://www.amazon.in/s?k=home+lighting"
+                        >
+                            Amazon
+                        </a>
+
+
+                        <a
+                            class="store-btn flipkart-btn"
+                            target="_blank"
+                            href="https://www.flipkart.com/search?q=home%20lighting"
+                        >
+                            Flipkart
+                        </a>
+
+
+                        <a
+                            class="store-btn ikea-btn"
+                            target="_blank"
+                            href="https://www.ikea.com/in/en/search/?q=lighting"
+                        >
+                            IKEA
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- KITCHEN -->
+
+                <div class="product-card">
+
+                    <div class="product-icon">
+                        🍳
+                    </div>
+
+                    <h3>
+                        Kitchen Products
+                    </h3>
+
+                    <p>
+                        Kitchen storage, organisers, utensils and useful accessories.
+                    </p>
+
+
+                    <div class="store-buttons">
+
+                        <a
+                            class="store-btn amazon-btn"
+                            target="_blank"
+                            href="https://www.amazon.in/s?k=kitchen+storage+organizer"
+                        >
+                            Amazon
+                        </a>
+
+
+                        <a
+                            class="store-btn flipkart-btn"
+                            target="_blank"
+                            href="https://www.flipkart.com/search?q=kitchen%20storage%20organizer"
+                        >
+                            Flipkart
+                        </a>
+
+
+                        <a
+                            class="store-btn ikea-btn"
+                            target="_blank"
+                            href="https://www.ikea.com/in/en/search/?q=kitchen"
+                        >
+                            IKEA
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STORAGE -->
+
+                <div class="product-card">
+
+                    <div class="product-icon">
+                        🗄️
+                    </div>
+
+                    <h3>
+                        Storage & Organisation
+                    </h3>
+
+                    <p>
+                        Storage boxes, shelves, cabinets and home organisers.
+                    </p>
+
+
+                    <div class="store-buttons">
+
+                        <a
+                            class="store-btn amazon-btn"
+                            target="_blank"
+                            href="https://www.amazon.in/s?k=home+storage+organizer"
+                        >
+                            Amazon
+                        </a>
+
+
+                        <a
+                            class="store-btn flipkart-btn"
+                            target="_blank"
+                            href="https://www.flipkart.com/search?q=home%20storage%20organizer"
+                        >
+                            Flipkart
+                        </a>
+
+
+                        <a
+                            class="store-btn ikea-btn"
+                            target="_blank"
+                            href="https://www.ikea.com/in/en/search/?q=storage"
+                        >
+                            IKEA
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DECOR -->
+
+                <div class="product-card">
+
+                    <div class="product-icon">
+                        🪴
+                    </div>
+
+                    <h3>
+                        Home Decor
+                    </h3>
+
+                    <p>
+                        Plants, wall decor, mirrors and decorative home accessories.
+                    </p>
+
+
+                    <div class="store-buttons">
+
+                        <a
+                            class="store-btn amazon-btn"
+                            target="_blank"
+                            href="https://www.amazon.in/s?k=home+decor"
+                        >
+                            Amazon
+                        </a>
+
+
+                        <a
+                            class="store-btn flipkart-btn"
+                            target="_blank"
+                            href="https://www.flipkart.com/search?q=home%20decor"
+                        >
+                            Flipkart
+                        </a>
+
+
+                        <a
+                            class="store-btn ikea-btn"
+                            target="_blank"
+                            href="https://www.ikea.com/in/en/search/?q=decor"
+                        >
+                            IKEA
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="product-note">
+
+                💡 <b>Note:</b>
+                These buttons open retailer search pages for the selected
+                product category. Product prices and availability can change
+                on the retailer website.
+
+            </div>
+
+
+        </div>
+
+
+    `;
+
+
+    /* AI PROMPT */
+
+    const aiDetails = `
+
+Home Size: ${size} sq.ft
+
+Home Type: ${type}
+
+Number of Rooms: ${rooms}
+
+Home Style: ${style}
+
+Location: ${location || "Not specified"}
+
+User Budget: ₹${totalBudget.toLocaleString("en-IN")}
+
+Requirements:
+${needs || "General home planning"}
+
+Please create a practical home planning recommendation.
+
+Include suitable budget priorities,
+important home expenses,
+money-saving ideas,
+and a simple step-by-step plan.
+
+Also suggest useful product categories
+for this home based on the user's requirements.
+
+Do not invent current product prices or
+specific product availability.
+
+`;
+
+
+    try {
+
+
+        const response =
+            await fetch(
+                "/ai-recommendation",
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        planner:
+                            "Home Planning",
+
+                        budget:
+                            totalBudget.toString(),
+
+                        details:
+                            aiDetails
+
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        const aiResult =
+            document.getElementById(
+                "aiHomeResult"
+            );
+
+
+        const aiSource =
+            document.getElementById(
+                "aiHomeSource"
+            );
+
+
+        if (data.success) {
+
+
+            aiResult.classList.remove(
+                "loading"
+            );
+
+
+            aiResult.innerHTML =
+                escapeHtml(
+                    data.recommendation
+                );
+
+
+            if (
+                data.source ===
+                "gemini"
+            ) {
+
+                aiSource.innerText =
+                    "✨ Recommendation generated by Gemini AI.";
+
+            } else {
+
+                aiSource.innerText =
+                    "💡 Backup recommendation used because Gemini AI is temporarily unavailable.";
+
+            }
+
+
+        } else {
+
+
+            aiResult.classList.remove(
+                "loading"
+            );
+
+
+            aiResult.innerText =
+                data.message ||
+                "Unable to generate recommendation.";
+
+        }
+
+
+    } catch (error) {
+
+
+        console.error(error);
+
+
+        document.getElementById(
+            "aiHomeResult"
+        ).innerText =
+            "AI recommendation could not be loaded. Please try again.";
+
+    }
+
+
+    button.disabled = false;
+
+    button.innerText =
+        "✨ Create Home Plan";
+
+}
+
+
+/*
+    Prevent AI response from injecting HTML
+    into the webpage.
+*/
+
+function escapeHtml(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        text;
+
+    return div.innerHTML;
+}
+
+
+</script>
+
+
+</body>
+
+</html>

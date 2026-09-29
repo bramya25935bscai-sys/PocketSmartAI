@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PocketSmart AI - History</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f6f4f1;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .back {
+            text-decoration: none;
+            color: #6b2c5c;
+            font-weight: bold;
+        }
+
+        .card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .planner {
+            color: #6b2c5c;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .date {
+            color: #777;
+            font-size: 13px;
+        }
+
+        .recommendation {
+            white-space: pre-wrap;
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+
+        button {
+            background: #d95d39;
+            color: white;
+            border: none;
+            padding: 9px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top">
+        <h1>📚 My Planning History</h1>
+
+        <a class="back" href="/dashboard">
+            ← Dashboard
+        </a>
+    </div>
+
+    {% if plans %}
+
+        {% for plan in plans %}
+
+        <div class="card">
+
+            <div class="planner">
+                {{ plan["planner"] }}
+            </div>
+
+            <p>
+                <strong>Budget:</strong>
+                ₹{{ plan["budget"] or "Not specified" }}
+            </p>
+
+            <p>
+                <strong>Requirements:</strong>
+                {{ plan["requirements"] }}
+            </p>
+
+            <div class="recommendation">
+                {{ plan["recommendation"] }}
+            </div>
+
+            <p class="date">
+                {{ plan["created_at"] }}
+            </p>
+
+            <form
+                method="POST"
+                action="/delete-plan/{{ plan['id'] }}"
+            >
+                <button type="submit">
+                    Delete
+                </button>
+            </form>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="card">
+            <h2>No saved plans yet.</h2>
+
+            <p>
+                Use AI Smart Planner to create your first plan.
+            </p>
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
